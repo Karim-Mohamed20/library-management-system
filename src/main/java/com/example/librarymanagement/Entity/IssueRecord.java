@@ -15,8 +15,8 @@ public class IssueRecord {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private LocalDate issueDate;
-    private LocalTime dueDate;
-    private LocalTime returnDate;
+    private LocalDate dueDate;
+    private LocalDate returnDate;
     private Boolean isReturned;
 
     @ManyToOne
