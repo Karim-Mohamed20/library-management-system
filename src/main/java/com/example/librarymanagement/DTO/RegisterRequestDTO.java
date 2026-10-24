@@ -1,10 +1,10 @@
 package com.example.librarymanagement.DTO;
 
-import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Data
-@Builder
+@NoArgsConstructor
 public class RegisterRequestDTO {
 
     private String username;

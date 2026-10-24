@@ -31,3 +31,23 @@ build/
 
 ### VS Code ###
 .vscode/
+
+### Local configuration and secrets ###
+.env
+.env.*
+!.env.example
+src/main/resources/application-local.yml
+src/main/resources/application-local.yaml
+src/main/resources/application-*.local.yml
+src/main/resources/application-*.local.yaml
+
+### Logs and crash reports ###
+*.log
+logs/
+hs_err_pid*
+replay_pid*
+
+### Operating system files ###
+.DS_Store
+Thumbs.db
+Desktop.ini

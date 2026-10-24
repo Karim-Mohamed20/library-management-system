@@ -31,7 +31,7 @@ public class IssueRecordService {
             throw new RuntimeException("Book Not Available");
         }
         String userName = SecurityContextHolder.getContext().getAuthentication().getName();
-        User user = userRepository.findByUsername(userName).orElseThrow(()-> new RuntimeException("User Not Found"));
+        User user = userRepository.findByUserName(userName).orElseThrow(()-> new RuntimeException("User Not Found"));
 
         IssueRecord issueRecord = new IssueRecord();
         issueRecord.setIssueDate(LocalDate.now());

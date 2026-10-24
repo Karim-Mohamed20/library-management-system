@@ -4,6 +4,7 @@ import com.example.librarymanagement.DTO.LoginRequestDTO;
 import com.example.librarymanagement.DTO.LoginResponseDTO;
 import com.example.librarymanagement.DTO.RegisterRequestDTO;
 import com.example.librarymanagement.Entity.User;
+import com.example.librarymanagement.JWT.JwtService;
 import com.example.librarymanagement.Repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -25,14 +26,14 @@ public class AuthenticationService {
     private PasswordEncoder passwordEncoder;
 
     @Autowired
-    private JWTService jwtService;
+    private JwtService jwtService;
 
     @Autowired
     private AuthenticationManager authenticationManager;
 
     public User registerNormalUser (RegisterRequestDTO registerRequestDTO) {
 
-        if(userRepository.findByUsername(registerRequestDTO.getUsername()).isPresent()) {
+        if(userRepository.findByUserName(registerRequestDTO.getUsername()).isPresent()) {
             throw new RuntimeException("Username is already registered");
         }
         Set<String> roles = new HashSet<String>();
@@ -48,7 +49,7 @@ public class AuthenticationService {
     }
 
     public User registerAdminUser (@RequestBody RegisterRequestDTO registerRequestDTO) {
-        if(userRepository.findByUsername(registerRequestDTO.getUsername()).isPresent()) {
+        if(userRepository.findByUserName(registerRequestDTO.getUsername()).isPresent()) {
             throw new RuntimeException("Username is already registered");
         }
         Set<String> roles = new HashSet<>();
@@ -71,14 +72,14 @@ public class AuthenticationService {
                         loginRequestDTO.getPassword())
         );
 
-        User user = userRepository.findByUsername(loginRequestDTO.getUsername())
+        User user = userRepository.findByUserName(loginRequestDTO.getUsername())
                 .orElseThrow(()-> new RuntimeException("Username not found"));
 
         String token = jwtService.generateToken(user);
 
         return LoginResponseDTO.builder()
                 .token(token)
-                .username(user.getUserName())
+                .username(user.getUsername())
                 .roles(user.getRoles())
                 .build();
     }
